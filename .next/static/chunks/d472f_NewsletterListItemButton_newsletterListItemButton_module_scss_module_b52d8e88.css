@@ -1,0 +1,19 @@
+/* [project]/src/app/components/NewsletterListItemButton/newsletterListItemButton.module.scss.module.css [app-client] (css) */
+button.newsletterListItemButton-module-scss-module___WFoUG__newsletterListItemButton {
+  background-color: var(--color-red);
+  margin-top: 15px;
+  padding: 8px 30px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-white);
+  border: 0;
+}
+
+button.newsletterListItemButton-module-scss-module___WFoUG__newsletterListItemButton.newsletterListItemButton-module-scss-module___WFoUG__subscriptionButton {
+  background-color: var(--color-yellow);
+  color: var(--color-contrast);
+}
+
+/*# sourceMappingURL=d472f_NewsletterListItemButton_newsletterListItemButton_module_scss_module_b52d8e88.css.map*/

@@ -1,57 +1,40 @@
-import React,{Fragment} from 'react';
-import {NEWSLETTER_ITEMS} from '@/app/mocks/newsletters';
-import {Newsletter} from '../../types';
-import NewsletterListItem from "../NewsletterListItem/NewsletterListItem";
-import {USER_WITH_ONE_SUBSCRIPTION, USER_WITHOUT_SUBSCRIPTION, USER_WITH_MULTIPLE_SUBSCRIPTION} from '../../mocks/user'
+import React from 'react';
+import { Newsletter } from '../../types';
+import NewsletterListItem from '../NewsletterListItem/NewsletterListItem';
+import styles from './newsletterList.module.scss';
 
+type NewsletterListProps = {
+  newsletters: Newsletter[];
+  sites: string[];
+};
 
-import styles from "./newsletterList.module.scss"
+const NewsletterList: React.FC<NewsletterListProps> = ({ newsletters, sites }) => {
+  return (
+    <div className="container">
+      <header className="app-header">
+        <h1>Newsletters</h1>
+        <p>Dans cette page, vous retrouvez l’ensemble des newsletters des Echos et des marques satellites. Ainsi, vous pouvez découvrir toutes nos newsletters selon vos centres d’intérêt et gérer plus facilement l’inscription à vos newsletters. </p>
+      </header>
+      <div className={styles.newsletterList}>
+        {sites.length > 0 ? (
+          sites.map((site) => (
+            <React.Fragment key={site}>
+              <h2>{site}</h2>
+              <div className={styles.newsletterListGrid}>
+                {newsletters
+                  .filter((newsletter) => newsletter.site === site)
+                  .map((item) => (
+                    <NewsletterListItem item={item} key={item.id} userCanSubscribe={item.userCanSubscribe} />
+                  ))}
+              </div>
+            </React.Fragment>
+          ))
+        ) : (
+          <p>Aucun site trouvé.</p>
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default async function NewsletterList() {
-
-    const sites = await getSite();
-    const newslettersList = await getNewsletters();
-
-    return (
-        <div className={styles.newsletterList}>
-            {sites.map((site)=>{
-                return <Fragment key={site.toString()}>
-                <h2>{site}</h2>
-                <div className={styles.newsletterListGrid}>
-                    {newslettersList.filter((newsletter: Newsletter)=>newsletter.site === site).map((item)=>{
-                        return <NewsletterListItem item={item} key={item.id} userCanSubscribe={item.userCanSubscribe}/>
-                    })}
-                </div>
-                </Fragment>
-            })}
-        </div>
-    )
-}
-
-async function getSite() {
-    let allSites:Array<string> = []
-    NEWSLETTER_ITEMS.forEach((item: Newsletter)=>{
-        if (!allSites.includes(item.site)) {
-            allSites.push(item.site)
-        }
-    })
-  return allSites;
-}
-
-async function getNewsletters() {
-    const userSubscription = USER_WITH_ONE_SUBSCRIPTION;
-
-    let subscriptionsArray: Array<Newsletter> = []
-
-    NEWSLETTER_ITEMS.forEach((item: Newsletter)=>{
-        if (userSubscription.subscriptions.includes(item.subscriptions[0]) || item.subscriptions.length === 0) {
-            subscriptionsArray.push({...item, userCanSubscribe: true})
-        } else {
-            subscriptionsArray.push({...item, userCanSubscribe: false})
-        }
-    })
-    
-  return subscriptionsArray;
-}
-
-
+export default NewsletterList;

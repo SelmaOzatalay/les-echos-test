@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 55, "column": 0}, "map": {"version":3,"sources":["file:///Users/selmao/les-echos-test/pages/_app.tsx"],"sourcesContent":["import '@/styles/globals.css'; // Importer les styles globaux\nimport type { AppProps } from 'next/app';\n\nexport default function MyApp({ Component, pageProps }: AppProps) {\n  return <Component {...pageProps} />;\n}\n"],"names":[],"mappings":";;;;;;AAGe,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAY;IAC9D,qBAAO,qKAAC;QAAW,GAAG,SAAS;;;;;;AACjC","debugId":null}}]
+}

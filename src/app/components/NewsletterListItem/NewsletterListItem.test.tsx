@@ -1,27 +1,70 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { expect } from 'chai';
+// NewsletterListItem.test.tsx
+import { render, screen } from '@testing-library/react';
 import NewsletterListItem from './NewsletterListItem';
+import '@testing-library/jest-dom'; // Import des matchers jest-dom
+import { Newsletter } from '../../types';
 
-const nlItem = {
+// Mock des composants externes et des styles
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ alt, src }: { alt: string, src: string }) => <img alt={alt} src={src} />
+}));
+
+jest.mock('../NewsletterListItemButton/NewsletterListItemButton', () => ({
+  __esModule: true,
+  default: ({ userCanSubscribe }: { userCanSubscribe?: boolean }) => (
+    <button>{userCanSubscribe ? "S'inscrire" : "S'abonner"}</button>
+  )
+}));
+
+jest.mock('./newsletterListItem.module.scss', () => ({
+  newsletterListItem: 'newsletterListItem',
+  newsletterListItemTopContainer: 'newsletterListItemTopContainer',
+}));
+
+describe('NewsletterListItem', () => {
+  // Mock de l'objet Newsletter que tu as fourni
+  const mockItem: Newsletter = {
     id: "000000000000000000000000",
     image: "https://placehold.co/200",
     description: "Dive into the unknown with this week's spotlight!",
     title: "Weekly Wonders",
     site: "DEN",
     subscriptions: ["RIGHT_1"],
-}
+  };
 
-describe('NewsletterListItem Component', () => {
-    it('should render the component with the correct content', () => {
-        const { getByText } = render(<NewsletterListItem item={nlItem} />);
-        const titleElement = getByText(nlItem.title);
-        expect(titleElement).to.exist;
-    });
+  it('rend correctement un article de newsletter avec les informations fournies', () => {
+    render(<NewsletterListItem item={mockItem} />);
 
-    // it('should render a default message if no title is provided', () => {
-    //     const { getByText } = render(<NewsletterListItem item={nlItem}/>);
-    //     const defaultElement = getByText('No Title Available');
-    //     expect(defaultElement).to.exist;
-    // });
+    const image = screen.getByAltText(mockItem.title);
+    expect(image).toHaveAttribute('src', mockItem.image);
+    expect(image).toHaveAttribute('alt', mockItem.title);
+
+    const title = screen.getByRole('heading', { level: 3 });
+    expect(title).toHaveTextContent(mockItem.title);
+
+    const description = screen.getByText(mockItem.description);
+    expect(description).toBeInTheDocument();
+  });
+
+  it('affiche le bouton "S\'inscrire" quand userCanSubscribe est true', () => {
+    render(<NewsletterListItem item={mockItem} userCanSubscribe={true} />);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveTextContent("S'inscrire");
+  });
+
+  it('affiche le bouton "S\'abonner" quand userCanSubscribe est false', () => {
+    render(<NewsletterListItem item={mockItem} userCanSubscribe={false} />);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveTextContent("S'abonner");
+  });
+
+  it('affiche le bouton "S\'abonner" par défaut quand userCanSubscribe est indéfini', () => {
+    render(<NewsletterListItem item={mockItem} />);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveTextContent("S'abonner");
+  });
 });

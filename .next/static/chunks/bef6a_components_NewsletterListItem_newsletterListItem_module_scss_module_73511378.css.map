@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/components/NewsletterListItem/newsletterListItem.module.scss.module.css"],"sourcesContent":[".newsletterListItem{display:flex;flex-direction:column;justify-content:space-between;text-align:center}.newsletterListItem header{position:relative;height:200px;padding:20px}.newsletterListItem figure{position:absolute;top:0;left:0;width:100%;height:100%}.newsletterListItem figure img{width:100%;height:100%;object-fit:cover;object-position:center}.newsletterListItem h3{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center;font-family:\"Merriweather\",serif;color:var(--color-white);text-shadow:1px 1px 1px rgba(0,0,0,.3);font-size:30px;font-weight:700}.newsletterListItem p{margin-top:15px}.newsletterListItem button{background-color:var(--color-red);margin-top:15px;padding:8px 30px;border-radius:20px;font-size:14px;font-weight:700;line-height:24px;color:var(--color-white);border:0}.newsletterListItem button.subscriptionButton{background-color:var(--color-yellow);color:var(--color-contrast)}"],"names":[],"mappings":"AAAA;;;;;;;AAAuG;;;;;;AAAuE;;;;;;;;AAAiF;;;;;;;AAA8F;;;;;;;;;;;;;;AAAuP;;;;AAAsC;;;;;;;;;;;;AAAmM"}}]
+}

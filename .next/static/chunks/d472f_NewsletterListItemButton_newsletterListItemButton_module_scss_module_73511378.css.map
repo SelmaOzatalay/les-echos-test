@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/components/NewsletterListItemButton/newsletterListItemButton.module.scss.module.css"],"sourcesContent":["button.newsletterListItemButton{background-color:var(--color-red);margin-top:15px;padding:8px 30px;border-radius:20px;font-size:14px;font-weight:700;line-height:24px;color:var(--color-white);border:0;cursor:pointer}button.newsletterListItemButton.subscriptionButton{background-color:var(--color-yellow);color:var(--color-contrast)}"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;AAAuN"}}]
+}

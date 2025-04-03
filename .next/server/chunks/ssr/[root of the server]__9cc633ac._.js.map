@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 47, "column": 0}, "map": {"version":3,"sources":["file:///Users/selmao/les-echos-test/pages/index.tsx"],"sourcesContent":["import { GetServerSideProps } from 'next';\n\nconst Home = () => {\n  return null; // Cette page ne s'affiche jamais car elle redirige automatiquement\n};\n\nexport const getServerSideProps: GetServerSideProps = async () => {\n  return {\n    redirect: {\n      destination: '/newsletter', // Redirection vers /newsletter\n      permanent: false, // false = redirection 302 (temporaire), true = redirection 301 (permanente)\n    },\n  };\n};\n\nexport default Home;\n"],"names":[],"mappings":";;;;AAEA,MAAM,OAAO;IACX,OAAO,MAAM,mEAAmE;AAClF;AAEO,MAAM,qBAAyC;IACpD,OAAO;QACL,UAAU;YACR,aAAa;YACb,WAAW;QACb;IACF;AACF;uCAEe","debugId":null}}]
+}

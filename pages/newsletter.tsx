@@ -14,26 +14,43 @@ const NewsletterPage: NextPage<NewsletterPageProps> = ({ newsletters, sites }) =
   return <NewsletterList newsletters={newsletters} sites={sites} />;
 };
 
+
 export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/newsletters');
+    if (!res.ok) {
+      throw new Error(`Échec du fetch: ${res.status} ${res.statusText}`);
+    }
 
-  const res = await fetch('http://localhost:3000/api/newsletters');
-  const newsletters: Newsletter[] = await res.json();
-  const userSubscription = USER_WITH_ONE_SUBSCRIPTION;
+    const newsletters: Newsletter[] = await res.json();
+    const userSubscription = USER_WITH_ONE_SUBSCRIPTION;
 
-  let subscriptionsArray: Array<Newsletter> = []
+    const subscriptionsArray = newsletters.map((item) => ({
+      ...item,
+      userCanSubscribe:
+        userSubscription.subscriptions.includes(item.subscriptions[0]) ||
+        item.subscriptions.length === 0,
+    }));
 
-  newsletters.forEach((item: Newsletter)=>{
-    subscriptionsArray.push({...item, userCanSubscribe: userSubscription.subscriptions.includes(item.subscriptions[0]) || item.subscriptions.length === 0})
-  })
+    const sites = await getSite();
 
-  const sites = await getSite();
+    return {
+      props: {
+        newsletters: subscriptionsArray || [],
+        sites: sites || [],
+      },
+    };
+  } catch (error) {
+    console.error('Erreur dans getServerSideProps:', error);
 
-  return {
-    props: {
-      newsletters: subscriptionsArray || [],
-      sites: sites || [],
-    },
-  };
+    return {
+      props: {
+        newsletters: [],
+        sites: [],
+        error: 'Impossible de charger les newsletters pour le moment.',
+      },
+    };
+  }
 };
 
 async function getSite(): Promise<string[]> {

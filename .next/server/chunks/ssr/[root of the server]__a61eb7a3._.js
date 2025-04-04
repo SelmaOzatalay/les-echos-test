@@ -651,23 +651,34 @@ const NewsletterPage = ({ newsletters, sites })=>{
     }, this);
 };
 const getServerSideProps = async ()=>{
-    const res = await fetch('http://localhost:3000/api/newsletters');
-    const newsletters = await res.json();
-    const userSubscription = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$mocks$2f$user$2e$ts__$5b$ssr$5d$__$28$ecmascript$29$__["USER_WITH_ONE_SUBSCRIPTION"];
-    let subscriptionsArray = [];
-    newsletters.forEach((item)=>{
-        subscriptionsArray.push({
-            ...item,
-            userCanSubscribe: userSubscription.subscriptions.includes(item.subscriptions[0]) || item.subscriptions.length === 0
-        });
-    });
-    const sites = await getSite();
-    return {
-        props: {
-            newsletters: subscriptionsArray || [],
-            sites: sites || []
+    try {
+        const res = await fetch('http://localhost:3000/api/newsletters');
+        if (!res.ok) {
+            throw new Error(`Échec du fetch: ${res.status} ${res.statusText}`);
         }
-    };
+        const newsletters = await res.json();
+        const userSubscription = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$mocks$2f$user$2e$ts__$5b$ssr$5d$__$28$ecmascript$29$__["USER_WITH_ONE_SUBSCRIPTION"];
+        const subscriptionsArray = newsletters.map((item)=>({
+                ...item,
+                userCanSubscribe: userSubscription.subscriptions.includes(item.subscriptions[0]) || item.subscriptions.length === 0
+            }));
+        const sites = await getSite();
+        return {
+            props: {
+                newsletters: subscriptionsArray || [],
+                sites: sites || []
+            }
+        };
+    } catch (error) {
+        console.error('Erreur dans getServerSideProps:', error);
+        return {
+            props: {
+                newsletters: [],
+                sites: [],
+                error: 'Impossible de charger les newsletters pour le moment.'
+            }
+        };
+    }
 };
 async function getSite() {
     let allSites = [];

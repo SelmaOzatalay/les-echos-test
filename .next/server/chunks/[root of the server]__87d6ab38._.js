@@ -224,7 +224,7 @@ function handler(req, res) {
         });
         res.status(200).json(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$mocks$2f$newsletters$2e$ts__$5b$api$5d$__$28$ecmascript$29$__["NEWSLETTER_ITEMS"]);
     } else {
-        res.status(405).end(); // Méthode non autorisée
+        res.status(405).end();
     }
 }
 }}),

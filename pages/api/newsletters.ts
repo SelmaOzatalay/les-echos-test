@@ -7,6 +7,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Newsle
         console.log({req})
       res.status(200).json(NEWSLETTER_ITEMS);
     } else {
-      res.status(405).end(); // Méthode non autorisée
+      res.status(405).end();
     }
   }
